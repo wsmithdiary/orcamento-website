@@ -1,7 +1,9 @@
+import Formulario from "./components/Formulario";
+
 function App() {
   return (
     <>
-      <h1>Gerar orçamento</h1>
+      <Formulario />
     </>
   )
 };
