@@ -18,6 +18,7 @@ export default function Formulario() {
     const [quantiaTotal, setQuantiaTotal] = useState('');
 
     const selectOpcoes = [
+        { valor: "", rotulo: "Selecione..." },
         { valor: "M", rotulo: "m (metro linear)" },
         { valor: "M2", rotulo: "m² (metro quadrado)" },
         { valor: "M3", rotulo: "m³ (metro cúbico)" },
@@ -76,6 +77,13 @@ export default function Formulario() {
                     Adicionar
                 </button>
             </form>
+            <ul>
+                {servicos.map((s, indice) => (
+                    <li key={indice}>
+                        {s.descricao} — {s.quantidade} {s.unidade} × R$ {s.precoUnitario}
+                    </li>
+                ))}
+            </ul>
         </>
     );
 }

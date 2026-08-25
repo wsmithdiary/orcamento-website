@@ -6,13 +6,14 @@ type Props = Omit<React.ComponentProps<"input">, "onChange"> & {
     onChange: (valor: string) => void
 }
 
-export default function Campo({ onChange, label, ...resto }: Props) {
+export default function Campo({ onChange, label, value, ...resto }: Props) {
     const id = useId();
     return (
         <label htmlFor={id}>
             {label}
             <input
                 {...resto}
+                value={value}
                 id={id}
                 onChange={(e) => onChange(e.target.value)}
             />
