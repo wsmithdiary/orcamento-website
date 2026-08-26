@@ -41,10 +41,10 @@ export default function Formulario() {
     }
     return (
         <div
-            className="flex flex-col items-center"
+            className="flex flex-col items-center w-full h-full gap-12 font-bold"
         >
             <form
-                className='w-96 h-96 flex flex-col gap-4'
+                className='flex flex-col w-2/3 gap-2'
             >
                 <Campo
                     label="DESCRIÇÃO DO SERVIÇO:"

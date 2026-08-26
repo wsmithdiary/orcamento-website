@@ -3,7 +3,7 @@ import logo from "/logo-dourado.png"
 function App() {
   return (
     <main
-      className="flex flex-col items-center p-28 w-dvw h-dvh bg-mist-800 text-amber-50"
+      className="flex flex-col gap-5 items-center p-5 bg-mist-800 text-amber-100"
     >
       <img src={logo} alt="teste" className="w-64" />
       <Formulario />

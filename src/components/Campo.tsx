@@ -13,7 +13,10 @@ export default function Campo({ onChange, label, value, ...resto }: Props) {
             htmlFor={id}
             className="flex flex-col"
         >
-            {label}
+            <span
+            >
+                {label}
+            </span>
             <input
                 className="border border-amber-500 p-1"
                 {...resto}
