@@ -1,7 +1,7 @@
 import { expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import Campo from "./Campo";
+import Campo from "../components/Campo";
 
 test("Associa o label ao input", () => {
     render(<Campo label="DESCRIÇÃO:" value="" onChange={() => { }} />);
