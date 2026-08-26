@@ -9,11 +9,12 @@ type Opcao = {
 type Props = Omit<React.ComponentProps<"select">, "onChange"> & {
     label: string,
     value: string,
+    erro?: string,
     onChange: (valor: string) => void,
     opcoes: Opcao[]
 }
 
-export default function CampoSelect({ value, label, onChange, opcoes, ...resto }: Props) {
+export default function CampoSelect({ value, label, onChange, opcoes, erro, ...resto }: Props) {
     const id = useId();
     return (
         <label
@@ -22,6 +23,8 @@ export default function CampoSelect({ value, label, onChange, opcoes, ...resto }
         >
             {label}
             <select
+                aria-invalid={Boolean(erro)}
+                aria-describedby={erro ? `${id}-erro` : undefined}
                 className="border border-amber-500 p-1"
                 {...resto}
                 value={value}
@@ -39,6 +42,13 @@ export default function CampoSelect({ value, label, onChange, opcoes, ...resto }
                     ))
                 }
             </select>
+            {
+                erro && (
+                    <span id={`${id}-erro`} role="alert" className="text-red-400 text-sm font-normal">
+                        {erro}
+                    </span>
+                )
+            }
         </label>
     )
 }
