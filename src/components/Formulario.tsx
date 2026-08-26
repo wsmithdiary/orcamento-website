@@ -1,9 +1,9 @@
-import './Formulario.css';
 import { useState } from "react";
 import Campo from "./Campo";
 import CampoSelect from "./CampoSelect";
 
 type Servico = {
+    id: string,
     descricao: string,
     unidade: string,
     precoUnitario: number,
@@ -26,6 +26,7 @@ export default function Formulario() {
 
     function adicionarServico() {
         const novoServico: Servico = {
+            id: crypto.randomUUID(),
             descricao: servico,
             unidade,
             precoUnitario: Number(valorPorUnidade),
@@ -39,23 +40,25 @@ export default function Formulario() {
         setQuantiaTotal('');
     }
     return (
-        <>
+        <div
+            className="flex flex-col items-center"
+        >
             <form
-                className='form'
+                className='w-96 h-96 flex flex-col gap-4'
             >
                 <Campo
-                    label="Serviço"
+                    label="DESCRIÇÃO DO SERVIÇO:"
                     onChange={setServico}
                     value={servico}
                 />
                 <CampoSelect
-                    label="Unidade de medida"
+                    label="UNIDADE DE MEDIDA:"
                     value={unidade}
                     onChange={setUnidade}
                     opcoes={selectOpcoes}
                 />
                 <Campo
-                    label="Preço unitário"
+                    label="PREÇO POR UNIDADE:"
                     step="0.01"
                     min="0"
                     value={valorPorUnidade}
@@ -63,7 +66,7 @@ export default function Formulario() {
                     type="number"
                 />
                 <Campo
-                    label="Quantidade"
+                    label="MEDIDA TOTAL:"
                     onChange={setQuantiaTotal}
                     value={quantiaTotal}
                     type="number"
@@ -71,19 +74,36 @@ export default function Formulario() {
                     min="0"
                 />
                 <button
+                    className="border border-amber-200 bg-amber-600 p-1"
                     type="button"
                     onClick={adicionarServico}
                 >
                     Adicionar
                 </button>
             </form>
-            <ul>
-                {servicos.map((s, indice) => (
-                    <li key={indice}>
-                        {s.descricao} — {s.quantidade} {s.unidade} × R$ {s.precoUnitario}
-                    </li>
-                ))}
-            </ul>
-        </>
+            <div>
+                <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-amber-400">
+                    Itens
+                </h2>
+                <ul className="flex flex-col divide-y divide-gray-700 rounded-lg border border-amber-400 bg-gray-800">
+                    {servicos.map((s) => (
+                        <li
+                            key={s.id}
+                            className="flex items-center justify-between gap-4 p-3"
+                        >
+                            <span className="font-medium text-gray-100">
+                                {s.descricao.toUpperCase()}{' '}
+                                <span className="font-normal text-amber-300">
+                                    — {s.quantidade.toFixed(2)} {s.unidade} × R$ {s.precoUnitario.toFixed(2)}
+                                </span>
+                            </span>
+                            <div className="flex shrink-0 gap-2">
+                                {/* editar/remover: reaproveitar bg-amber-600 hover:bg-amber-700 text-gray-900 border border-amber-400, mesmo padrão dos outros botões */}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </div>
     );
 }

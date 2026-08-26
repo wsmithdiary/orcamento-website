@@ -16,9 +16,13 @@ type Props = Omit<React.ComponentProps<"select">, "onChange"> & {
 export default function CampoSelect({ value, label, onChange, opcoes, ...resto }: Props) {
     const id = useId();
     return (
-        <label htmlFor={id}>
+        <label
+            htmlFor={id}
+            className="flex flex-col"
+        >
             {label}
             <select
+                className="border border-amber-500 p-1"
                 {...resto}
                 value={value}
                 id={id}
