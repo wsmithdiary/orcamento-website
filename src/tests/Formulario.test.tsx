@@ -1,20 +1,30 @@
+import { describe, expect, test } from "vitest";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import Formulario from "../components/Formulario";
-import { render, screen } from "@testing-library/react"
-import userEvent from "@testing-library/user-event"
 
-test("adiciona servico a lista e limpa os campos", async () => {
-    render(<Formulario />)
+describe('E2E do comportamento do formulario', () => {
 
-    await userEvent.type(screen.getByLabelText("Serviço"), "Pintura");
-    await userEvent.selectOptions(screen.getByLabelText("Unidade de medida"), "M2");
-    await userEvent.type(screen.getByLabelText("Preço unitário"), "10.5");
-    await userEvent.type(screen.getByLabelText("Quantidade"), "100");
+    test("adiciona servico a lista e limpa os campos", async () => {
+        render(<Formulario />)
 
-    await userEvent.click(screen.getByRole("button", { name: "Adicionar" }));
+        await userEvent.type(screen.getByLabelText("DESCRIÇÃO DO SERVIÇO:"), "Pintura");
+        await userEvent.selectOptions(screen.getByLabelText("UNIDADE DE MEDIDA:"), "M2");
+        await userEvent.type(screen.getByLabelText("PREÇO POR UNIDADE:"), "10.5");
+        await userEvent.type(screen.getByLabelText("MEDIDA TOTAL:"), "100.6");
+        await userEvent.click(screen.getByRole("button", { name: "ADICIONAR" }));
 
-    expect(screen.getByText("Pintura — 100 M2 × R$ 10.5")).toBeDefined()
-    expect(screen.getByLabelText("Serviço")).toHaveValue("");
-    expect(screen.getByLabelText("Unidade de medida")).toHaveValue("");
-    expect(screen.getByLabelText("Preço unitário")).toHaveValue(null);
-    expect(screen.getByLabelText("Quantidade")).toHaveValue(null);
-});
+        expect(screen.getAllByRole('listitem')).toHaveLength(1)
+        expect(screen.getByRole('listitem')).toHaveTextContent(/pintura/i)
+        expect(screen.getByLabelText("DESCRIÇÃO DO SERVIÇO:")).toHaveValue("");
+        expect(screen.getByLabelText("UNIDADE DE MEDIDA:")).toHaveValue("");
+        expect(screen.getByLabelText("MEDIDA TOTAL:")).toHaveValue("");
+        expect(screen.getByLabelText("PREÇO POR UNIDADE:")).toHaveValue("");
+    });
+
+    test('não adiciona servico quando campos estão inválidos', async () => {
+        render(<Formulario />)
+        await userEvent.click(screen.getByRole('button', { name: /adicionar/i }))
+        expect(screen.queryAllByRole('listitem')).toHaveLength(0)
+    });
+})
