@@ -6,12 +6,12 @@ Monte orçamentos de mão de obra linha a linha e exporte o PDF pronto. React, T
 
 ### [☄ Ver o que já está no ar →](https://empreiteira-website.vercel.app)
 
-![React](https://img.shields.io/badge/React-19-9fd8ff?style=for-the-badge&logo=react&logoColor=080d1a&labelColor=080d1a)
-![TypeScript](https://img.shields.io/badge/TypeScript-6ea8ff?style=for-the-badge&logo=typescript&logoColor=080d1a&labelColor=080d1a)
-![Vite](https://img.shields.io/badge/Vite-7d4bd8?style=for-the-badge&logo=vite&logoColor=9fd8ff&labelColor=080d1a)
-![Vitest](https://img.shields.io/badge/Vitest-9fd8ff?style=for-the-badge&logo=vitest&logoColor=080d1a&labelColor=080d1a)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-6ea8ff?style=for-the-badge&logo=tailwindcss&logoColor=080d1a&labelColor=080d1a)
-![Vercel](https://img.shields.io/badge/Vercel-0b1226?style=for-the-badge&logo=vercel&logoColor=9fd8ff&labelColor=080d1a)
+![React 19](https://img.shields.io/badge/React_19-9fd8ff?style=for-the-badge&logo=react&logoColor=080d1a)
+![TypeScript](https://img.shields.io/badge/TypeScript-6ea8ff?style=for-the-badge&logo=typescript&logoColor=080d1a)
+![Vite](https://img.shields.io/badge/Vite-7d4bd8?style=for-the-badge&logo=vite&logoColor=9fd8ff)
+![Vitest](https://img.shields.io/badge/Vitest-9fd8ff?style=for-the-badge&logo=vitest&logoColor=080d1a)
+![Tailwind CSS 4](https://img.shields.io/badge/Tailwind_CSS_4-6ea8ff?style=for-the-badge&logo=tailwindcss&logoColor=080d1a)
+![Vercel](https://img.shields.io/badge/Vercel-0b1226?style=for-the-badge&logo=vercel&logoColor=9fd8ff)
 
 </div>
 
