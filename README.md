@@ -4,6 +4,8 @@
 
 Monte orçamentos de mão de obra linha a linha e exporte o PDF pronto. React, TypeScript e Vite — tudo no navegador, sem back-end.
 
+### [☄ Ver o que já está no ar →](https://empreiteira-website.vercel.app)
+
 ![React](https://img.shields.io/badge/React-19-9fd8ff?style=for-the-badge&logo=react&logoColor=080d1a&labelColor=080d1a)
 ![TypeScript](https://img.shields.io/badge/TypeScript-6ea8ff?style=for-the-badge&logo=typescript&logoColor=080d1a&labelColor=080d1a)
 ![Vite](https://img.shields.io/badge/Vite-7d4bd8?style=for-the-badge&logo=vite&logoColor=9fd8ff&labelColor=080d1a)
@@ -23,7 +25,10 @@ Monte orçamentos de mão de obra linha a linha e exporte o PDF pronto. React, T
 >
 > **Como está construído.** **React** com **TypeScript** sobre **Vite**. A regra de negócio vive em `core/` e não importa uma linha de React — é testada no **Vitest** sem renderizar nada. Depois que a página carrega, não existe mais nenhuma chamada de rede.
 >
-> **A meta.** No tempo de um orçamento manual, montar dois. E o PDF sair pronto no fim, sem etapa extra.
+> **A meta.** No tempo de um orçamento manual, montar dois. E o PDF sair pronto no fim, sem etapa extra. → **[Testar agora](https://empreiteira-website.vercel.app)**
+
+> [!NOTE]
+> A versão publicada sobe a cada mudança na `main` e mostra o estado real do projeto, não uma demonstração preparada. O que já funciona e o que ainda está sendo escrito estão no [registro de status](#️-status), no fim da página.
 
 Cada decisão daqui para baixo vem com o motivo escrito ao lado. As que foram descartadas também — e essas dizem mais.
 
@@ -72,6 +77,8 @@ flowchart LR
 
 **PDF** — Gerado no navegador do usuário, sem back-end.
 
+**Deploy** — **Vercel**, a cada push na `main`.
+
 <div align="center">✦ · ✧ · ✦</div>
 
 ## 🪐 Arquitetura
@@ -107,14 +114,14 @@ Na prática isso significa que a maior parte da lógica é testada sem renderiza
 - 🇧🇷 **Campos numéricos como `type="text"` + `inputMode="decimal"`** — o `type="number"` do HTML não aceita vírgula como separador decimal, que é o que o usuário brasileiro digita. O campo aceita texto e a conversão de `"1,50"` para `1.5` acontece na validação, num só lugar.
 - 🧼 **Validação como função pura** — `validarFormulario(campos)` devolve um objeto de erros por campo. Quem decide o que fazer com o erro é o componente, não a função.
 - 🔗 **Total como valor derivado, não como estado** — o total é função dos itens. Guardá-lo em `useState` criaria uma segunda fonte de verdade para o mesmo número, e todo bug de "o total não bateu" nasce de duas fontes de verdade que se desencontram. Ele é calculado na renderização.
-- ☁️ **Hospedagem estática na Vercel** — o resultado do build é um punhado de arquivos. Uma CDN entrega isso sem que exista um processo para manter no ar, e o HTTPS vem junto — do qual o próximo item depende.
+- ☁️ **Hospedagem estática na Vercel** — o resultado do build é um punhado de arquivos. Uma CDN entrega isso sem que exista um processo para manter no ar, e o HTTPS vem junto — do qual o próximo item depende. Está em [empreiteira-website.vercel.app](https://empreiteira-website.vercel.app).
 - 📲 **PWA como forma de entrega** — o orçamento é montado onde a obra está, nem sempre com sinal. Como a aplicação já não faz nenhuma chamada de rede depois de carregada, falta só garantir que os arquivos estejam no aparelho: é exatamente isso, e nada além disso, que o service worker faz aqui.
 
 <div align="center">✦ · ✧ · ✦</div>
 
 ## 🕳️ O buraco da memória
 
-Em *1984*, o que deixava de ser conveniente ia para o buraco da memória e passava a nunca ter existido. Aqui é o contrário: o que foi descartado fica escrito, com a data e o motivo. Um roadmap acumula item que parou de fazer sentido quando o escopo mudou. Estes saíram:
+Em *1984*, o que deixava de ser conveniente ia para o buraco da memória e passava a nunca ter existido. Aqui é o contrário: o que foi descartado fica escrito, com o motivo. Um roadmap acumula item que parou de fazer sentido quando o escopo mudou. Estes saíram:
 
 ```diff
 - Empacotamento em Docker
@@ -167,13 +174,14 @@ npm run dev
 
 ## 🛰️ Status
 
-Em desenvolvimento, e o registro abaixo é atualizado conforme cada item fecha.
+Em desenvolvimento, publicado desde o primeiro dia em que teve o que mostrar. O registro abaixo é atualizado conforme cada item fecha — e a [versão no ar](https://empreiteira-website.vercel.app) reflete sempre o topo da `main`.
 
 **✅ Pronto**
 
 - [x] Campos acessíveis com label associado e exibição de erro
 - [x] Validação pura de formulário (campo vazio, vírgula decimal, `NaN`, valores ≤ 0)
 - [x] Formulário adicionando itens à lista, com submit inválido bloqueado
+- [x] Deploy da versão pública — [empreiteira-website.vercel.app](https://empreiteira-website.vercel.app)
 
 **🚧 Em andamento**
 
@@ -184,7 +192,6 @@ Em desenvolvimento, e o registro abaixo é atualizado conforme cada item fecha.
 **📋 A seguir**
 
 - [ ] Exportação em PDF
-- [ ] Deploy da versão pública
 - [ ] Instalação como PWA (manifest + service worker)
 
 <div align="center">✦ · ✧ · ✦</div>
