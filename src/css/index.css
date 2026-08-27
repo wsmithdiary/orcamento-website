@@ -1,1 +1,36 @@
 @import "tailwindcss";
+
+@theme {
+    /* 60% - cores base */
+    --color-base-50: #FFFFFF;
+    --color-base-100: #FAF8F4
+    --color-base-200: #F1EDE5;
+
+    /* 30% - estrutura */
+    --color-tinta-100: #E2DDD3;
+    --color-tinta-300: #8A847A;
+    --color-tinta-500: #6b665e;
+    --color-tinta-900: #2E2B27;
+
+    /* 10% - marca: dourado */
+    --color-marca-50: #F7F0DE;
+    --color-marca-200: #E7D9B4;
+    --color-marca-500: #B78926;
+    --color-marca-700: #96701C;
+    --color-marca-900: #5E4711
+
+    /* --- semânticas: fora das cores principais --- */
+    --color-ok-50: #EEF6F0;
+    --color-ok-200: #A9CDB8;
+    --color-ok-600: #1F7A4C;
+    --color-ok-800: #1F5C3A;
+    --color-perigo-200: #EBCDCB;
+    --color-perigo-600: #B3261E;
+
+    /* --- tipografia da marca --- */
+    --font-marca: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+    @apply bg-base-100 text-tinta-900 antialiased
+}
