@@ -3,9 +3,13 @@ import logo from "/logo-dourado.png"
 function App() {
   return (
     <main
-      className="min-h-dvh flex flex-col gap-5 items-center p-5 bg-mist-800 text-amber-100"
+      className="bg-base-50 min-h-dvh  gap-5 items-center p-5"
     >
-      <img src={logo} alt="Logo Alicerce Empreiteira" className="min-w-32 max-h-64" />
+      <img 
+        src={logo} 
+        alt="Logo Alicerce Empreiteira" 
+        className="min-w-32 max-h-64" 
+      />
       <Formulario />
     </main>
   )
