@@ -1,39 +1,62 @@
-import type { CamposFormulario } from "./tipos";
-import type { ErrosFormulario } from "./tipos";
+import Decimal from "decimal.js";
+import type { CamposFormulario, ErrosFormulario, ResultadoValidacao } from "./tipos";
 
-export default function validarFormulario(campos: CamposFormulario): ErrosFormulario {
-    const erros: ErrosFormulario = {}
+/** Um separador, vírgula ou ponto, sempre decimal. Milhar não é aceito. */
+const FORMATO_NUMERO = /^\d+(?:[,.]\d+)?$/;
 
-    if (campos.descricao.trim() === '') {
-        erros.descricao = 'A descrição do serviço é obrigatória';
+const AJUDA_PRECO = "Use apenas números, com vírgula nos centavos. Ex.: 596,50";
+const AJUDA_MEDIDA = "Use apenas números, com vírgula nos decimais. Ex.: 139,94";
+
+/** Devolve o número, ou null se o texto não estiver no formato aceito. */
+export function parsearValor(texto: string): Decimal | null {
+    const limpo = texto.trim();
+    if (!FORMATO_NUMERO.test(limpo)) return null;
+    return new Decimal(limpo.replace(",", "."));
+}
+
+export default function validarFormulario(campos: CamposFormulario): ResultadoValidacao {
+    const erros: ErrosFormulario = {};
+
+    const descricao = campos.descricao.trim();
+    if (descricao === "") {
+        erros.descricao = "Preencha a descrição do serviço.";
     }
 
-    if (campos.unidadeDeMedida.trim() === '') {
-        erros.unidadeDeMedida = 'É preciso selecionar a unidade de medida'
+    const unidadeDeMedida = campos.unidadeDeMedida.trim();
+    if (unidadeDeMedida === "") {
+        erros.unidadeDeMedida = "Selecione a unidade de medida.";
     }
 
-
-    if (campos.precoUnitario.trim() === '') {
-        erros.precoUnitario = 'Preço unitário é obrigatório';
+    let precoUnitario: Decimal | null = null;
+    if (campos.precoUnitario.trim() === "") {
+        erros.precoUnitario = "Preencha o preço.";
     } else {
-        const preco = Number(campos.precoUnitario.replace(',', '.'));
-        if (Number.isNaN(preco)) {
-            erros.precoUnitario = 'Preço unitário deve conter apenas números';
-        } else if (preco <= 0) {
-            erros.precoUnitario = 'Preço deve ser maior que zero';
+        precoUnitario = parsearValor(campos.precoUnitario);
+        if (precoUnitario === null) {
+            erros.precoUnitario = AJUDA_PRECO;
+        } else if (precoUnitario.lessThanOrEqualTo(0)) {
+            erros.precoUnitario = "O preço precisa ser maior que zero.";
         }
     }
 
-    if (campos.quantiaTotal.trim() === '') {
-        erros.quantiaTotal = 'A quantia total é obrigatória';
+    let quantiaTotal: Decimal | null = null;
+    if (campos.quantiaTotal.trim() === "") {
+        erros.quantiaTotal = "Preencha a medida.";
     } else {
-        const quantia = Number(campos.quantiaTotal.replace(',', '.'));
-        if (Number.isNaN(quantia)) {
-            erros.quantiaTotal = 'A quanta total tem de ser um número'
-        } else if (quantia <= 0) {
-            erros.quantiaTotal = 'A quantidade total tem de ser maior que zero'
+        quantiaTotal = parsearValor(campos.quantiaTotal);
+        if (quantiaTotal === null) {
+            erros.quantiaTotal = AJUDA_MEDIDA;
+        } else if (quantiaTotal.lessThanOrEqualTo(0)) {
+            erros.quantiaTotal = "A medida precisa ser maior que zero.";
         }
     }
 
-    return erros;
+    if (Object.keys(erros).length > 0 || precoUnitario === null || quantiaTotal === null) {
+        return { ok: false, erros };
+    }
+
+    return {
+        ok: true,
+        campos: { descricao, unidadeDeMedida, precoUnitario, quantiaTotal },
+    };
 }

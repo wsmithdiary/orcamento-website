@@ -1,71 +1,77 @@
 import { useState } from "react";
 import Campo from "./Campo";
 import CampoSelect from "./CampoSelect";
-import { type ErrosFormulario, type CamposFormulario, type Item } from "../core/tipos";
+import type { ErrosFormulario, Item } from "../core/tipos";
 import validarFormulario from "../core/validacao";
+import calcularSubtotal, { calcularTotal } from "../core/calcular";
+import { formatarMoeda, formatarQuantidade } from "../core/formatar";
 
 const selectOpcoes = [
     { valor: "", rotulo: "Selecione..." },
-    { valor: "m (metro linear)", rotulo: "m (metro linear)" },
-    { valor: "m² (metro quadrado", rotulo: "m² (metro quadrado)" },
-    { valor: "m³ (metro cúbico)", rotulo: "m³ (metro cúbico)" },
+    { valor: "m", rotulo: "m (metro linear)" },
+    { valor: "m²", rotulo: "m² (metro quadrado)" },
+    { valor: "m³", rotulo: "m³ (metro cúbico)" },
 ];
 
+const AJUDA_NUMERO = "Use vírgula para as casas decimais. Para milhar, escreva sem ponto: 1000";
+
 export default function Formulario() {
-    const [items, setItem] = useState<Item[]>([]);
-    const [errors, setNewError] = useState<ErrosFormulario>({});
+    const [itens, setItens] = useState<Item[]>([]);
+    const [erros, setErros] = useState<ErrosFormulario>({});
 
     const [descricao, setDescricao] = useState('');
     const [unidadeDeMedida, setUnidadeDeMedida] = useState('');
     const [precoUnitario, setPrecoUnitario] = useState('');
     const [quantiaTotal, setQuantiaTotal] = useState('');
 
+    const total = calcularTotal(itens);
 
     function adicionarServico() {
-        const campos: CamposFormulario = {
+        const resultado = validarFormulario({
             descricao,
             unidadeDeMedida,
             precoUnitario,
-            quantiaTotal
-        };
+            quantiaTotal,
+        });
 
-        const validacao: ErrosFormulario = validarFormulario(campos);
-
-        if (Object.keys(validacao).length > 0) {
-            setNewError(validacao);
-            return
+        if (!resultado.ok) {
+            setErros(resultado.erros);
+            return;
         }
+
+        const { campos } = resultado;
 
         const novoItem: Item = {
             id: Date.now().toString(),
-            descricao,
-            unidadeDeMedida,
-            precoUnitario,
-            quantiaTotal
-        }
+            descricao: campos.descricao,
+            unidadeDeMedida: campos.unidadeDeMedida,
+            precoUnitario: campos.precoUnitario,
+            quantiaTotal: campos.quantiaTotal,
+            subtotal: calcularSubtotal(campos.precoUnitario, campos.quantiaTotal),
+        };
 
-        setItem([...items, novoItem]);
-
+        setItens([...itens, novoItem]);
         setDescricao('');
         setUnidadeDeMedida('');
         setPrecoUnitario('');
         setQuantiaTotal('');
-        setNewError({})
+        setErros({});
     }
+
     return (
         <>
             <form
                 className='flex flex-col w-2/3 gap-2'
             >
                 <Campo
-                    erro={errors.descricao}
                     label="DESCRIÇÃO DO SERVIÇO:"
+                    erro={erros.descricao}
                     onChange={setDescricao}
                     value={descricao}
                     required
                 />
                 <CampoSelect
-                    erro={errors.unidadeDeMedida}
+                    erro={erros.unidadeDeMedida}
                     label="UNIDADE DE MEDIDA:"
                     value={unidadeDeMedida}
                     onChange={setUnidadeDeMedida}
@@ -73,26 +79,25 @@ export default function Formulario() {
                     required
                 />
                 <Campo
-                    erro={errors.precoUnitario}
+                    erro={erros.precoUnitario}
                     label="PREÇO POR UNIDADE:"
-                    step="0.01"
-                    min="0"
+                    title={AJUDA_NUMERO}
+                    placeholder="0,00"
                     value={precoUnitario}
                     onChange={setPrecoUnitario}
                     type="text"
                     inputMode="decimal"
-                    pattern="[0-9]+([.,][0-9]+)?"
                     required
                 />
                 <Campo
-                    erro={errors.quantiaTotal}
+                    erro={erros.quantiaTotal}
                     label="MEDIDA TOTAL:"
-                    title="Digite apenas números decimais (ex: 10.5 ou 10,5)"
+                    title={AJUDA_NUMERO}
+                    placeholder="0,00"
+                    value={quantiaTotal}
+                    onChange={setQuantiaTotal}
                     type="text"
                     inputMode="decimal"
-                    pattern="[0-9]+([.,][0-9]+)?"
-                    onChange={setQuantiaTotal}
-                    value={quantiaTotal}
                     required
                 />
                 <button
@@ -107,19 +112,20 @@ export default function Formulario() {
                 Itens
             </h2>
             <ul className="min-w-3/4 flex flex-col divide-y divide-gray-700 rounded-lg bg-gray-800">
-                {items.map((s) => (
+                {itens.map((item) => (
                     <li
-                        key={s.id}
-
+                        key={item.id}
                     >
                         <span
                             className="flex justify-between font-medium text-gray-100 p-2"
                         >
                             <span>
-                                {s.descricao.toUpperCase()}
+                                {item.descricao.toUpperCase()}
                             </span>
                             <span className="font-normal text-amber-300">
-                                {`${s.quantiaTotal} ${s.unidadeDeMedida}`}{' '}× R$ {s.precoUnitario}
+                                {formatarQuantidade(item.quantiaTotal)} {item.unidadeDeMedida}
+                                {' '}× {formatarMoeda(item.precoUnitario)}
+                                {' '}= {formatarMoeda(item.subtotal)}
                             </span>
                         </span>
                         <div className="flex shrink-0 gap-2">
@@ -128,6 +134,7 @@ export default function Formulario() {
                     </li>
                 ))}
             </ul>
+            <h2>TOTAL: {formatarMoeda(total)}</h2>
         </>
     );
 }
