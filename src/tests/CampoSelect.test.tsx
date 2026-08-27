@@ -3,14 +3,14 @@ import { describe, expect, it, vi } from "vitest";
 import CampoSelect from "../components/CampoSelect";
 import userEvent from "@testing-library/user-event";
 
-describe('Testa o componente "CampoSelet"', () => {
+describe('CampoSelect', () => {
     const opcoes = [
-        { valor: "M", rotulo: "m (metro linear)" },
-        { valor: "M2", rotulo: "m² (metro quadrado)" },
-        { valor: "M3", rotulo: "m³ (metro cúbico)" },
+        { valor: "m (metro linear)", rotulo: "m (metro linear)" },
+        { valor: "m² (metro quadrado)", rotulo: "m² (metro quadrado)" },
+        { valor: "m³ (metro cúbico)", rotulo: "m³ (metro cúbico)" },
     ];
 
-    it('Deve ter o label correto', () => {
+    it('tem o label correto', () => {
         render(
             <CampoSelect
                 label="Unidade"
@@ -23,7 +23,7 @@ describe('Testa o componente "CampoSelet"', () => {
         expect(screen.getByLabelText("Unidade")).toBeDefined();
     });
 
-    it('Deve selecionar as opções corretamente', async () => {
+    it('opções são renderizadas', async () => {
         const aoMudar = vi.fn();
         render(
             <CampoSelect
@@ -35,7 +35,7 @@ describe('Testa o componente "CampoSelet"', () => {
         )
 
         const select = screen.getByLabelText("Unidade");
-        await userEvent.selectOptions(select, "M2");
-        expect(aoMudar).toHaveBeenCalledWith("M2");
+        await userEvent.selectOptions(select, "m² (metro quadrado)");
+        expect(aoMudar).toHaveBeenCalledWith("m² (metro quadrado)");
     });
 })
