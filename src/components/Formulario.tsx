@@ -6,9 +6,9 @@ import validarFormulario from "../core/validacao";
 
 const selectOpcoes = [
     { valor: "", rotulo: "Selecione..." },
-    { valor: "M", rotulo: "m (metro linear)" },
-    { valor: "M2", rotulo: "m² (metro quadrado)" },
-    { valor: "M3", rotulo: "m³ (metro cúbico)" },
+    { valor: "m (metro linear)", rotulo: "m (metro linear)" },
+    { valor: "m² (metro quadrado", rotulo: "m² (metro quadrado)" },
+    { valor: "m³ (metro cúbico)", rotulo: "m³ (metro cúbico)" },
 ];
 
 export default function Formulario() {
@@ -37,7 +37,7 @@ export default function Formulario() {
         }
 
         const novoItem: Item = {
-            id: crypto.randomUUID(),
+            id: Date.now().toString(),
             descricao,
             unidadeDeMedida,
             precoUnitario,
@@ -106,21 +106,20 @@ export default function Formulario() {
             <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-amber-400">
                 Itens
             </h2>
-            <ul className="flex flex-col divide-y divide-gray-700 rounded-lg border border-amber-400 bg-gray-800">
+            <ul className="min-w-3/4 flex flex-col divide-y divide-gray-700 rounded-lg bg-gray-800">
                 {items.map((s) => (
                     <li
                         key={s.id}
-                        className="flex items-center justify-between gap-4 p-3"
+
                     >
-                        <span className="font-medium text-gray-100">
+                        <span
+                            className="flex justify-between font-medium text-gray-100 p-2"
+                        >
                             <span>
                                 {s.descricao.toUpperCase()}
                             </span>
                             <span className="font-normal text-amber-300">
-                                — {`${s.quantiaTotal} ${s.unidadeDeMedida}`}
-                            </span>
-                            <span>
-                                {' '}× R$ {s.precoUnitario}
+                                {`${s.quantiaTotal} ${s.unidadeDeMedida}`}{' '}× R$ {s.precoUnitario}
                             </span>
                         </span>
                         <div className="flex shrink-0 gap-2">
