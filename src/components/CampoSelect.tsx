@@ -24,7 +24,7 @@ export default function CampoSelect({ value, label, onChange, opcoes, erro, ...r
             {label}
             <select
                 {...resto}
-                className="border border-amber-500 p-1"
+                className="p-1"
                 id={id}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
@@ -49,7 +49,7 @@ export default function CampoSelect({ value, label, onChange, opcoes, erro, ...r
                     <span
                         id={`${id}-erro`}
                         role="alert"
-                        className="text-red-400 text-sm font-normal"
+                        className="text-perigo-600 text-sm"
                     >
                         {erro}
                     </span>

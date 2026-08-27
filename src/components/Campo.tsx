@@ -19,7 +19,7 @@ export default function Campo({ onChange, label, value, erro, ...resto }: Props)
             </span>
             <input
                 id={id}
-                className="border border-amber-500 p-1"
+                className="p-1"
                 {...resto}
                 onChange={(e) => onChange(e.target.value)}
                 value={value}
@@ -31,7 +31,7 @@ export default function Campo({ onChange, label, value, erro, ...resto }: Props)
                     <span
                         id={`${id}-erro`}
                         role="alert"
-                        className="text-red-400 text-sm font-normal"
+                        className="text-perigo-600 text-sm font-normal"
                     >
                         {erro}
                     </span>

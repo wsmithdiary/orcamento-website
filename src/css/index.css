@@ -3,7 +3,7 @@
 @theme {
     /* 60% - cores base */
     --color-base-50: #FFFFFF;
-    --color-base-100: #FAF8F4
+    --color-base-100: #FAF8F4;
     --color-base-200: #F1EDE5;
 
     /* 30% - estrutura */
@@ -17,7 +17,7 @@
     --color-marca-200: #E7D9B4;
     --color-marca-500: #B78926;
     --color-marca-700: #96701C;
-    --color-marca-900: #5E4711
+    --color-marca-900: #5E4711;
 
     /* --- semânticas: fora das cores principais --- */
     --color-ok-50: #EEF6F0;
