@@ -1,8 +1,7 @@
 import { describe, expect, test } from "vitest";
 import Decimal from "decimal.js";
 import validarFormulario from "../core/validacao";
-import type { CamposFormulario, ErrosFormulario } from "../core/tipos";
-
+import type { CamposFormulario, ErrosFormulario } from "../components/Formulario/Formulario.types";
 const camposValidos: CamposFormulario = {
     descricao: "Assentamento de piso",
     unidadeDeMedida: "m²",

@@ -1,6 +1,5 @@
 import Decimal from "decimal.js";
-import type { CamposFormulario, ErrosFormulario, ResultadoValidacao } from "./tipos";
-
+import type { CamposFormulario, ErrosFormulario, ResultadoValidacao } from "../components/Formulario/Formulario.types";
 /** Um separador, vírgula ou ponto, sempre decimal. Milhar não é aceito. */
 const FORMATO_NUMERO = /^\d+(?:[,.]\d+)?$/;
 
