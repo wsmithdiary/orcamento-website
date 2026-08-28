@@ -2,31 +2,33 @@
 @import "tailwindcss";
 
 @theme {
-    /* 60% - cores base */
+    /* 60% - cores base: branco com leve toque frio, como o branco do traje do All Might */
     --color-base-50: #FFFFFF;
-    --color-base-100: #FAF8F4;
-    --color-base-200: #F1EDE5;
+    --color-base-100: #F3F5FA;
+    --color-base-200: #E1E7F1;
 
-    /* 30% - estrutura */
-    --color-tinta-100: #E2DDD3;
-    --color-tinta-300: #8A847A;
-    --color-tinta-500: #6b665e;
-    --color-tinta-900: #2E2B27;
+    /* 30% - estrutura: azul-marinho do traje do All Might */
+    --color-tinta-100: #CDD6E8;
+    --color-tinta-300: #7C88A6;
+    --color-tinta-500: #47526E;
+    --color-tinta-900: #121A33;
 
-    /* 10% - marca: dourado */
-    --color-marca-50: #F7F0DE;
-    --color-marca-200: #E7D9B4;
-    --color-marca-500: #B78926;
-    --color-marca-700: #96701C;
-    --color-marca-900: #5E4711;
+    /* 10% - marca: vermelho-heroi das luvas, botas e capa do All Might */
+    --color-marca-50: #FBEAEA;
+    --color-marca-200: #EFB2AF;
+    --color-marca-500: #C8281F;
+    --color-marca-700: #9E1B15;
+    --color-marca-900: #63100C;
 
     /* --- semânticas: fora das cores principais --- */
-    --color-ok-50: #EEF6F0;
-    --color-ok-200: #A9CDB8;
-    --color-ok-600: #1F7A4C;
-    --color-ok-800: #1F5C3A;
-    --color-perigo-200: #EBCDCB;
-    --color-perigo-600: #B3261E;
+    --color-ok-50: #EAF6F0;
+    --color-ok-200: #9FD1B7;
+    --color-ok-600: #16794A;
+    --color-ok-800: #114F32;
+    /* perigo/alerta: dourado do cinto do All Might, distinto do vermelho da marca */
+    --color-perigo-50: #FBF0E2;
+    --color-perigo-200: #F0C29A;
+    --color-perigo-600: #B34A08;
 
     /* --- tipografia da marca --- */
     --font-marca: "Poppins", ui-sans-serif, system-ui, sans-serif;
