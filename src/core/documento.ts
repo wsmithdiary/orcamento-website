@@ -18,13 +18,14 @@ import { LOGO_PDF } from "./logoPdf";
 // por isso da para testar com Vitest sem renderizar nada.
 // ============================================================
 
-// Cores do documento impresso. Preto e cinza apenas: dourado em jato de tinta borra.
-const PRETO = "#1A1A1A";
-const CINZA = "#555555";
-const CINZA_CLARO = "#777777";
-const CINZA_TEXTO = "#333333";
-const FUNDO_CABECALHO = "#EDEBE6";
-const LINHA_TABELA = "#DDDDDD";
+// Cores do documento impresso: tons do azul-marinho da marca.
+// Nada de vermelho ou dourado saturado aqui — em jato de tinta borra.
+const PRETO = "#121A33";
+const CINZA = "#5B6480";
+const CINZA_CLARO = "#7C88A6";
+const CINZA_TEXTO = "#333B54";
+const FUNDO_CABECALHO = "#E9ECF5";
+const LINHA_TABELA = "#D3D8E6";
 
 /** Mostrado quando o usuario nao preencheu o campo. Linha em branco parece erro de impressao. */
 const TRACO = "—";
