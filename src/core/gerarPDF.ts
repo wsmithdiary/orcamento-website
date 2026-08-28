@@ -2,6 +2,8 @@ import type { Item } from "../components/ItemsList/ItemsList.type";
 import { montarDocumento } from "./documento";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
+import type { DadosCliente } from "../components/DadosCliente/DadosCliente.type";
+
 
 // ============================================================
 // O unico arquivo que fala com a biblioteca e baixa arquivo.
