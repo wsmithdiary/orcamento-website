@@ -1,52 +1,75 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Formulario from "../components/Formulario";
+import Formulario from "../components/Formulario/Formulario";
 
 const item = {
-    id: "1",
     descricao: "Assentamento de piso",
-    unidadeDeMedida: "m² (metro quadrado)",
+    unidadeDeMedida: "m²",
     precoUnitario: "10,59",
-    quantiaTotal: "139,94"
+    quantiaTotal: "139,94",
 };
 
-describe('Formulario E2E', () => {
-    const { descricao, unidadeDeMedida, precoUnitario, quantiaTotal } = item;
+async function preencherEEnviar() {
+    await userEvent.type(screen.getByLabelText("Descrição"), item.descricao);
+    await userEvent.selectOptions(screen.getByLabelText("Unidade"), item.unidadeDeMedida);
+    await userEvent.type(screen.getByLabelText("Preço unitário"), item.precoUnitario);
+    await userEvent.type(screen.getByLabelText("Quantidade"), item.quantiaTotal);
+    await userEvent.click(screen.getByRole("button", { name: /adicionar item/i }));
+}
 
-    test("cria e adiciona um item na lista", async () => {
-        render(<Formulario />);
+describe("Formulario", () => {
+    test("emite o item preenchido ao enviar", async () => {
+        const onAdicionar = vi.fn();
+        render(<Formulario onAdicionar={onAdicionar} />);
 
-        await userEvent.type(screen.getByLabelText("DESCRIÇÃO DO SERVIÇO:"), descricao);
-        await userEvent.selectOptions(screen.getByLabelText("UNIDADE DE MEDIDA:"), unidadeDeMedida);
-        await userEvent.type(screen.getByLabelText("PREÇO POR UNIDADE:"), precoUnitario);
-        await userEvent.type(screen.getByLabelText("MEDIDA TOTAL:"), quantiaTotal);
+        await preencherEEnviar();
 
-        await userEvent.click(screen.getByRole("button", { name: "ADICIONAR" }));
-
-        expect(screen.getAllByRole('listitem')).toHaveLength(1);
-        expect(screen.getByRole('listitem')).toHaveTextContent(/Assentamento de piso/i);
+        expect(onAdicionar).toHaveBeenCalledTimes(1);
+        expect(onAdicionar).toHaveBeenCalledWith(
+            expect.objectContaining({
+                descricao: "Assentamento de piso",
+                unidadeDeMedida: "m²",
+            }),
+        );
     });
 
-    test("apos adicionar um item, campos são limpos", async () => {
-        render(<Formulario />);
+    test("converte a virgula decimal do pt-BR nos campos numericos", async () => {
+        const onAdicionar = vi.fn();
+        render(<Formulario onAdicionar={onAdicionar} />);
 
-        await userEvent.type(screen.getByLabelText("DESCRIÇÃO DO SERVIÇO:"), descricao);
-        await userEvent.selectOptions(screen.getByLabelText("UNIDADE DE MEDIDA:"), unidadeDeMedida);
-        await userEvent.type(screen.getByLabelText("PREÇO POR UNIDADE:"), precoUnitario);
-        await userEvent.type(screen.getByLabelText("MEDIDA TOTAL:"), quantiaTotal);
+        await preencherEEnviar();
 
-        await userEvent.click(screen.getByRole("button", { name: "ADICIONAR" }));
-
-        expect(screen.getByLabelText("DESCRIÇÃO DO SERVIÇO:")).toHaveValue("");
-        expect(screen.getByLabelText("UNIDADE DE MEDIDA:")).toHaveValue("");
-        expect(screen.getByLabelText("MEDIDA TOTAL:")).toHaveValue("");
-        expect(screen.getByLabelText("PREÇO POR UNIDADE:")).toHaveValue("");
+        const emitido = onAdicionar.mock.calls[0][0];
+        expect(emitido.precoUnitario.toFixed(2)).toBe("10.59");
+        expect(emitido.quantiaTotal.toFixed(2)).toBe("139.94");
     });
 
-    test('não adiciona novo item com campos errados', async () => {
-        render(<Formulario />);
-        await userEvent.click(screen.getByRole('button', { name: /adicionar/i }));
-        expect(screen.queryAllByRole('listitem')).toHaveLength(0);
+    test("limpa os campos apos um envio valido", async () => {
+        render(<Formulario onAdicionar={vi.fn()} />);
+
+        await preencherEEnviar();
+
+        expect(screen.getByLabelText("Descrição")).toHaveValue("");
+        expect(screen.getByLabelText("Unidade")).toHaveValue("");
+        expect(screen.getByLabelText("Preço unitário")).toHaveValue("");
+        expect(screen.getByLabelText("Quantidade")).toHaveValue("");
     });
-})
+
+    test("bloqueia o envio quando os campos estao vazios", async () => {
+        const onAdicionar = vi.fn();
+        render(<Formulario onAdicionar={onAdicionar} />);
+
+        await userEvent.click(screen.getByRole("button", { name: /adicionar item/i }));
+
+        expect(onAdicionar).not.toHaveBeenCalled();
+    });
+
+    test("exibe mensagem de erro nos campos invalidos", async () => {
+        render(<Formulario onAdicionar={vi.fn()} />);
+
+        await userEvent.click(screen.getByRole("button", { name: /adicionar item/i }));
+
+        expect(screen.getAllByRole("alert").length).toBeGreaterThan(0);
+    });
+});

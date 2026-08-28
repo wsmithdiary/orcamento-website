@@ -1,19 +1,15 @@
 import { describe, expect, test } from "vitest";
 import Decimal from "decimal.js";
-import calcularSubtotal, { calcularTotal } from "../core/calcular";
-import type { Item } from "../core/tipos";
+import { calcularSubtotal, calcularTotal } from "../core/calcular";
+import type { Item } from "../components/ItemsList/ItemsList.type";
 
 function montarItem(preco: string, quantia: string): Item {
-    const precoUnitario = new Decimal(preco);
-    const quantiaTotal = new Decimal(quantia);
-
     return {
         id: `${preco}-${quantia}`,
         descricao: "Serviço",
         unidadeDeMedida: "m²",
-        precoUnitario,
-        quantiaTotal,
-        subtotal: calcularSubtotal(precoUnitario, quantiaTotal),
+        precoUnitario: new Decimal(preco),
+        quantiaTotal: new Decimal(quantia),
     };
 }
 
