@@ -133,9 +133,12 @@ function ItemCardEdicao({
                     <button
                         type="button"
                         onClick={onCancelar}
-                        className="h-9 rounded-md border border-tinta-100 bg-base-50 px-3 text-sm text-tinta-900 hover:bg-base-200"
+                        aria-label="Cancelar alterações"
+                        className="flex size-9 items-center justify-center rounded-md bg-perigo-600 text-base-50 hover:bg-perigo-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-perigo-600"
                     >
-                        Cancelar
+                        <span aria-hidden="true" className="text-lg leading-none">
+                            ×
+                        </span>
                     </button>
                     <button
                         type="button"
