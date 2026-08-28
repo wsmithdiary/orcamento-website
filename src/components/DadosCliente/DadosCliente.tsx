@@ -12,7 +12,14 @@ type Props = {
 // Fechada por padrao: estes dados sao preenchidos uma vez por orcamento,
 // enquanto os itens sao adicionados dezenas de vezes.
 // ============================================================
-export default function DadosClienteForm({ dados, onChange }: Props) {
+
+/**
+ * Formulario dos dados que vao para o cabecalho do PDF.
+ *
+ * @param dados - Estado atual, vindo do App.
+ * @param onChange - Recebe o objeto inteiro ja atualizado, nao apenas o campo alterado.
+ */
+export default function DadosDoCliente({ dados, onChange }: Props) {
     const [aberto, setAberto] = useState(false);
 
     // Liga o botao ao painel para o leitor de tela saber o que expande.
@@ -48,7 +55,7 @@ export default function DadosClienteForm({ dados, onChange }: Props) {
                     </span>
                 </span>
 
-                {/* Seta desenhada em SVG para acompanhar a cor da marca; aria-hidden por ser decorativa. */}
+                {/* Seta decorativa: o texto do botao ja diz o que ele faz. */}
                 <svg
                     width="18"
                     height="18"
@@ -65,7 +72,7 @@ export default function DadosClienteForm({ dados, onChange }: Props) {
                 </svg>
             </button>
 
-            {/* O painel so existe no DOM quando aberto: campo escondido continua focavel por teclado. */}
+            {/* O painel sai do DOM quando fechado. Campo escondido por CSS continua alcancavel por Tab. */}
             {aberto && (
                 <div id={idPainel} className="border-t border-base-200 px-4 pb-4 pt-3">
                     <Campo
