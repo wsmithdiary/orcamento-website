@@ -1,10 +1,11 @@
 import type { Props } from "./Campo.types";
+import { useId } from "react";
 
 
 
 export default function Campo({ onChange, label, value, erro, ...resto }: Props) {
     // gera id unico para o campo
-    const id = Date.now().toString();
+    const id = useId();
 
     // componente
     return (

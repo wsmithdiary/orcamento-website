@@ -1,8 +1,9 @@
+import { useId } from "react";
 import type { Props } from "./CampoSelect.types";
 
 export default function CampoSelect({ value, label, onChange, opcoes, erro, ...resto }: Props) {
     // gera id único
-    const id = Date.now().toString();
+    const id = useId();
 
     // componente
     return (
