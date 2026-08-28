@@ -1,5 +1,5 @@
 import type { Item } from "./ItemsList.type";
-import ItemCard from "../ItemCard/ItemCard";
+import ItemCard from "./ItemCard/ItemCard";
 
 type ItemsListProps = {
     itens: Item[];

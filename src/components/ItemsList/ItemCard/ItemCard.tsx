@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Decimal from "decimal.js";
-import type { Item } from "../ItemsList/ItemsList.type";
-import { calcularSubtotal } from "../../core/calcular";
-import { formatarMoeda, formatarQuantidade } from "../../core/formatar";
-import { IconeEditar, IconeExcluir, IconeConfirmar } from "../Icones/Icones";
+import type { Item } from "../../ItemsList/ItemsList.type";
+import { calcularSubtotal } from "../../../core/calcular";
+import { formatarMoeda, formatarQuantidade } from "../../../core/formatar";
+import { IconeEditar, IconeExcluir, IconeConfirmar } from "../../Icones/Icones";
 
 type ItemCardProps = {
     item: Item;
