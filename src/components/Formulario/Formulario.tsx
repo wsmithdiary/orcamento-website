@@ -73,7 +73,6 @@ export default function Formulario({ onAdicionar }: FormularioProps) {
                 erro={erros.descricao}
                 value={descricao}
                 onChange={setDescricao}
-                required
             />
 
             <div className="grid grid-cols-2 gap-3">
@@ -83,7 +82,6 @@ export default function Formulario({ onAdicionar }: FormularioProps) {
                     value={unidadeDeMedida}
                     onChange={setUnidadeDeMedida}
                     opcoes={selectOpcoes}
-                    required
                 />
                 <Campo
                     label="Quantidade"
@@ -94,7 +92,6 @@ export default function Formulario({ onAdicionar }: FormularioProps) {
                     onChange={setQuantiaTotal}
                     type="text"
                     inputMode="decimal"
-                    required
                 />
             </div>
 
@@ -107,7 +104,6 @@ export default function Formulario({ onAdicionar }: FormularioProps) {
                 onChange={setPrecoUnitario}
                 type="text"
                 inputMode="decimal"
-                required
             />
 
             <button
