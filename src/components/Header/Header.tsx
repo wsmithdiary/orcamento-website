@@ -1,5 +1,5 @@
 
-import Logo from '/icone-dourado.png';
+import Logo from '/icone-marca.png';
 
 export default function Header() {
     return (
