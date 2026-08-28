@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import CampoSelect from "../components/CampoSelect";
+import CampoSelect from "../components/Campo/CampoSelect/CampoSelect";
 import userEvent from "@testing-library/user-event";
 
 describe('CampoSelect', () => {

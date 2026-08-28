@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
-import Campo from "../components/Campo";
+import Campo from "../components/Campo/Campo";
 
 describe('Campo', () => {
     test("renderiza o label correto", () => {
