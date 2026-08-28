@@ -19,12 +19,3 @@ export type CamposValidados = {
 export type ResultadoValidacao =
     | { ok: true; campos: CamposValidados }
     | { ok: false; erros: ErrosFormulario };
-
-export type Item = {
-    id: string;
-    descricao: string;
-    unidadeDeMedida: string;
-    precoUnitario: Decimal;
-    quantiaTotal: Decimal;
-    subtotal: Decimal;
-};
